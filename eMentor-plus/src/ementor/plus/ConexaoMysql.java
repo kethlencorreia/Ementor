@@ -76,5 +76,41 @@ public class ConexaoMysql {
         return encontrado;
     }
     
+    public void cadastrarAluno(String nome, String CPF, String dataNascimento, String telefone,
+                                String matricula, int periodo){
+        
+        Connection conexao = realizaConexaoMySQL();
+        
+        String inserePessoa = "INSERT INTO ementor.Pessoas (nome, dataNascimento,"
+                + "CPF, telefone) VALUES (?,?,?,?)";
+        
+        String insereAluno = "INSERT INTO ementor.Alunos (CPF, matricula, periodo)"
+                + "VALUES (?,?,?)";
+        
+        try{
+            
+            PreparedStatement preparadorPessoa = conexao.prepareStatement(inserePessoa);
+            PreparedStatement preparadorAluno = conexao.prepareStatement(insereAluno);
+            
+            preparadorPessoa.setString(1, nome);
+            preparadorPessoa.setString(2, dataNascimento);
+            preparadorPessoa.setString(3, CPF);
+            preparadorPessoa.setString(4, telefone);
+            
+            preparadorAluno.setString(1, CPF);
+            preparadorAluno.setString(2, matricula);
+            preparadorAluno.setInt(3, periodo);
+            
+            preparadorPessoa.execute();
+            preparadorAluno.execute();
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Algum imprevisto ocorreu: " + e, "erro", 0);
+        }
+        
+        desconectaMySQL(conexao);
+        
+    }
+    
     
 }
