@@ -76,7 +76,7 @@ public class ConexaoMysql {
         return encontrado;
     }
     
-    public void cadastrarAluno(String nome, String CPF, String dataNascimento, String telefone,
+    public boolean cadastrarAluno(String nome, String CPF, String dataNascimento, String telefone,
                                 String matricula, int periodo){
         
         Connection conexao = realizaConexaoMySQL();
@@ -104,11 +104,17 @@ public class ConexaoMysql {
             preparadorPessoa.execute();
             preparadorAluno.execute();
             
+            return true;
+        }catch(java.sql.SQLIntegrityConstraintViolationException e){
+            JOptionPane.showMessageDialog(null, "O CPF informado já foi cadastrado.","erro", 0);
         }catch(SQLException e){
+            System.out.println(e);
             JOptionPane.showMessageDialog(null, "Algum imprevisto ocorreu: " + e, "erro", 0);
         }
         
         desconectaMySQL(conexao);
+        
+        return false;
         
     }
     

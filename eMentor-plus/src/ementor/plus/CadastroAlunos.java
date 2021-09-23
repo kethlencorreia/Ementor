@@ -68,7 +68,7 @@ public class CadastroAlunos extends javax.swing.JFrame {
         });
 
         try {
-            telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+            telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -173,11 +173,17 @@ public class CadastroAlunos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos"
                     , "Erro", 0);
         else{
-            conexao.cadastrarAluno(nome.getText(), cpf.getText(), dataNascimento.getText()
-                                   , telefone.getText(), matricula.getText(), Integer.parseInt(periodo.getText()));
-            JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!"
-                    , "Sucesso", 2);
+            if(conexao.cadastrarAluno(nome.getText(), cpf.getText(), dataNascimento.getText()
+                                   , telefone.getText(), matricula.getText(), Integer.parseInt(periodo.getText()))){
+            
+                JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!"
+                    , "Sucesso", JOptionPane.PLAIN_MESSAGE);
+            
+                setVisible(false);
+                dispose();
+            }
         }
+            
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telefoneActionPerformed
