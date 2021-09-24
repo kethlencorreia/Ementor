@@ -5,6 +5,8 @@
  */
 package ementor.plus;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author junior
@@ -27,7 +29,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        matricula = new javax.swing.JTextField();
+        salario = new javax.swing.JTextField();
         telefone = new javax.swing.JFormattedTextField();
         dataNascimento = new javax.swing.JFormattedTextField();
         cpf = new javax.swing.JFormattedTextField();
@@ -40,12 +42,12 @@ public class CadastroProfessor extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         nome = new javax.swing.JTextField();
-        dataAdimissao = new javax.swing.JFormattedTextField();
+        dataAdmissao = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         try {
-            telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
+            telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -89,10 +91,15 @@ public class CadastroProfessor extends javax.swing.JFrame {
         });
 
         try {
-            dataAdimissao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            dataAdmissao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        dataAdmissao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataAdmissaoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,7 +121,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(cpf)
-                                .addComponent(matricula, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(salario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)
@@ -123,7 +130,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dataAdimissao, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dataAdmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -139,7 +146,6 @@ public class CadastroProfessor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -147,7 +153,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
                         .addGap(56, 56, 56)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(matricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(salario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -156,9 +162,9 @@ public class CadastroProfessor extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dataAdimissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dataAdmissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addGap(22, 22, 22))
         );
@@ -168,12 +174,45 @@ public class CadastroProfessor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println(cpf.getText());
+        ConexaoMysql conexao = new ConexaoMysql();
+        
+        if(nome.getText().equals("") || cpf.getText().equals("") || 
+                dataNascimento.getText().equals("") || telefone.getText().equals("") 
+                || dataAdmissao.getText().equals("") || salario.getText().equals(""))
+            JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos"
+                    , "Erro", 0);
+        else{
+            try{
+                if(conexao.cadastrarProfessor(nome.getText(), cpf.getText(), dataNascimento.getText()
+                        , telefone.getText(), Double.parseDouble(salario.getText()), dataAdmissao.getText())){
+
+                    JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!"
+                        , "Sucesso", JOptionPane.PLAIN_MESSAGE);
+
+                    setVisible(false);
+                    dispose();
+
+                }
+            }catch(java.lang.NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "O salário deve ser um valor númerico."
+                    , "Erro", 0);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Houve um erro " + e
+                    , "Erro", 0);
+            }
+            
+            
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telefoneActionPerformed
-        // TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_telefoneActionPerformed
+
+    private void dataAdmissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataAdmissaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dataAdmissaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -212,7 +251,7 @@ public class CadastroProfessor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField cpf;
-    private javax.swing.JFormattedTextField dataAdimissao;
+    private javax.swing.JFormattedTextField dataAdmissao;
     private javax.swing.JFormattedTextField dataNascimento;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -222,8 +261,8 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField matricula;
     private javax.swing.JTextField nome;
+    private javax.swing.JTextField salario;
     private javax.swing.JFormattedTextField telefone;
     // End of variables declaration//GEN-END:variables
 }
