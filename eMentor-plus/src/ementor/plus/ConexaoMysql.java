@@ -106,9 +106,67 @@ public class ConexaoMysql {
             
             return true;
         }catch(java.sql.SQLIntegrityConstraintViolationException e){
+            System.out.println(e.getMessage());
+            if(e.getMessage().substring(41).equals("'Pessoas.PRIMARY'"))
+                JOptionPane.showMessageDialog(null, "O CPF informado já foi cadastrado.","erro", 0);
+            else{
+            
+                JOptionPane.showMessageDialog(null, "A matricula informada já foi cadastrada.","erro", 0);
+                
+                
+                String removePessoa = "delete from ementor.Pessoas where CPF = '"+CPF+"'";
+                
+                try{
+                    PreparedStatement preparadorPessoa = conexao.prepareStatement(removePessoa);
+                    preparadorPessoa.execute();
+                }catch(SQLException b){
+                    JOptionPane.showMessageDialog(null, "Algum imprevisto ocorreu: " + b, "erro", 0);
+                }
+            
+            }
+            }catch(SQLException e){
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Algum imprevisto ocorreu: " + e, "erro", 0);
+        }
+        
+        desconectaMySQL(conexao);
+        
+        return false;
+        
+    }
+    
+    public boolean cadastrarProfessor(String nome, String CPF, String dataNascimento, String telefone,
+                                double salario, String dataAdmissao){
+        
+        Connection conexao = realizaConexaoMySQL();
+        
+        String inserePessoa = "INSERT INTO ementor.Pessoas (nome, dataNascimento,"
+                + "CPF, telefone) VALUES (?,?,?,?)";
+        
+        String insereProfessor = "INSERT INTO ementor.Professores (CPF, salario, dataAdmissao)"
+                + "VALUES (?,?,?)";
+        
+        try{
+            
+            PreparedStatement preparadorPessoa = conexao.prepareStatement(inserePessoa);
+            PreparedStatement preparadorProfessor = conexao.prepareStatement(insereProfessor);
+            
+            preparadorPessoa.setString(1, nome);
+            preparadorPessoa.setString(2, dataNascimento);
+            preparadorPessoa.setString(3, CPF);
+            preparadorPessoa.setString(4, telefone);
+            
+            preparadorProfessor.setString(1, CPF);
+            preparadorProfessor.setDouble(2, salario);
+            preparadorProfessor.setString(3, dataAdmissao);
+            
+            preparadorPessoa.execute();
+            preparadorProfessor.execute();
+            
+            return true;
+        }catch(java.sql.SQLIntegrityConstraintViolationException e){
             JOptionPane.showMessageDialog(null, "O CPF informado já foi cadastrado.","erro", 0);
         }catch(SQLException e){
-            System.out.println(e);
             JOptionPane.showMessageDialog(null, "Algum imprevisto ocorreu: " + e, "erro", 0);
         }
         

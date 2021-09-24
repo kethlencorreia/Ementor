@@ -173,14 +173,23 @@ public class CadastroAlunos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos"
                     , "Erro", 0);
         else{
-            if(conexao.cadastrarAluno(nome.getText(), cpf.getText(), dataNascimento.getText()
-                                   , telefone.getText(), matricula.getText(), Integer.parseInt(periodo.getText()))){
             
-                JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!"
-                    , "Sucesso", JOptionPane.PLAIN_MESSAGE);
-            
-                setVisible(false);
-                dispose();
+            try{
+                if(conexao.cadastrarAluno(nome.getText(), cpf.getText(), dataNascimento.getText()
+                                       , telefone.getText(), matricula.getText(), Integer.parseInt(periodo.getText()))){
+
+                    JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!"
+                        , "Sucesso", JOptionPane.PLAIN_MESSAGE);
+
+                    setVisible(false);
+                    dispose();
+                }
+            }catch(java.lang.NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "O periodo deve ser um valor númerico"
+                    , "Erro", 0);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Houve um erro " + e
+                    , "Erro", 0);
             }
         }
             
