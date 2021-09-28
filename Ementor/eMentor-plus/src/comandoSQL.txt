@@ -11,6 +11,7 @@ CREATE TABLE ementor.Pessoas (nome VARCHAR(20), dataNascimento VARCHAR(10), CPF 
 
 CREATE TABLE ementor.Usuarios (nome VARCHAR(20),  CPF VARCHAR(15) PRIMARY KEY, senha VARCHAR(20), FOREIGN KEY(CPF) REFERENCES ementor.Pessoas(CPF));
 
+CREATE TABLE ementor.Professores (salario DECIMAL(26,14),dataAdmissao VARCHAR(10), CPF VARCHAR(15) PRIMARY KEY, FOREIGN KEY(CPF) REFERENCES ementor.Pessoas(CPF));
 
 INSERT INTO Pessoas(nome, dataNascimento, CPF, telefone) VALUES ("junior", "04/03/2002", "144", "(27)2569881");
 
