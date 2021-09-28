@@ -177,38 +177,13 @@ public class ConexaoMysql {
         
     }
     
-    public List<Pessoa> ListarPessoas(){
-        List<Pessoa> pessoas = new ArrayList<Pessoa>();
-        
-        Connection conexao = realizaConexaoMySQL();
-        
-        String selecionaPessoas = "SELECT * FROM ementor.pessoas";
-        
-        try {
-            PreparedStatement preparadorPessoa = conexao.prepareStatement(selecionaPessoas);
-
-            ResultSet resultadoPessoa = preparadorPessoa.executeQuery();
-
-            while(resultadoPessoa.next()){
-
-                   Pessoa pessoa = new Pessoa(resultadoPessoa.getString("nome"),resultadoPessoa.getString("dataNascimento"),
-                                            resultadoPessoa.getString("CPF"),resultadoPessoa.getString("telefone"));
-                    pessoas.add(pessoa);
-                }
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Algum imprevisto ocorreu: " + e, "erro", 0);
-        }
-        
-        return pessoas;
-    }
-    
     public List<Aluno> ListarAlunos(){
         List<Aluno> alunos = new ArrayList<Aluno>();
         
         Connection conexao = realizaConexaoMySQL();
         
-        String selecionaAlunos = "SELECT * FROM ementor.alunos";
+        String selecionaAlunos = "SELECT * FROM ementor.Alunos, ementor.Pessoas"
+                + " WHERE Pessoas.CPF = Alunos.CPF";
 
         try {
             PreparedStatement preparadorAluno = conexao.prepareStatement(selecionaAlunos);
@@ -217,8 +192,14 @@ public class ConexaoMysql {
             
             while(resultadoAluno.next()){
 
-                    Aluno aluno = new Aluno(resultadoAluno.getString("matricula"), resultadoAluno.getInt("periodo"));
-                    alunos.add(aluno);
+                Aluno aluno = new Aluno(resultadoAluno.getString("matricula"),
+                        resultadoAluno.getInt("periodo"),
+                        resultadoAluno.getString("nome"),
+                        resultadoAluno.getString("dataNascimento"),
+                        resultadoAluno.getString("CPF"),
+                        resultadoAluno.getString("telefone"));
+            
+                alunos.add(aluno);
             }
             
         }catch(SQLException e){
@@ -233,7 +214,8 @@ public class ConexaoMysql {
         
         Connection conexao = realizaConexaoMySQL();
         
-        String selecionaProfessores = "SELECT * FROM ementor.professores";
+        String selecionaProfessores = "SELECT * FROM ementor.Professores, ementor.Pessoas"
+                + " Where Professores.CPF = Pessoas.CPF";
 
         try {
             PreparedStatement preparadorProfessor = conexao.prepareStatement(selecionaProfessores);
@@ -241,7 +223,12 @@ public class ConexaoMysql {
             ResultSet resultadoProfessor = preparadorProfessor.executeQuery();
             
             while(resultadoProfessor.next()){
-                    Professor professor = new Professor(resultadoProfessor.getDouble("salario"), resultadoProfessor.getString("dataAdmissao"));
+                    Professor professor = new Professor(resultadoProfessor.getString("dataAdmissao"),
+                                resultadoProfessor.getDouble("salario"),
+                                resultadoProfessor.getString("nome"),
+                                resultadoProfessor.getString("dataNascimento"),
+                                resultadoProfessor.getString("CPF"),
+                                resultadoProfessor.getString("telefone"));
                     professores.add(professor);
             }
             
