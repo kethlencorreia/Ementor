@@ -2,8 +2,8 @@
 package ementor.plus;
 
 public class Professor extends Pessoa{
-    private String dataAdmissao;
-    private double salarioBruto;
+    String dataAdmissao;
+    double salarioBruto;
 
     public Professor() {
     }
