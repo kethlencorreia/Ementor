@@ -2,8 +2,8 @@
 package ementor.plus;
 
 public class Aluno extends Pessoa{
-    private String matricula;
-    private int periodo;
+    String matricula;
+    int periodo;
 
     public Aluno() {
     }
@@ -30,6 +30,7 @@ public class Aluno extends Pessoa{
         this.periodo = periodo;
     }
     
+    
     public String getMatricula(){
         return this.matricula;
     }
@@ -52,5 +53,9 @@ public class Aluno extends Pessoa{
         System.out.println("Matricula: " + this.matricula);
         System.out.println("Periodo: " + this.periodo);
     
+    }
+
+    void setPeriodo(String periodo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
