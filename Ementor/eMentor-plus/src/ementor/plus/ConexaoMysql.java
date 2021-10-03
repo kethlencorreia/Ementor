@@ -241,6 +241,7 @@ public class ConexaoMysql {
     
     public Aluno buscaAluno(String CPF){
         Aluno resultado =  new Aluno();
+        resultado = null;
         Connection conexao = realizaConexaoMySQL();
         
         String sql = "SELECT * FROM ementor.Pessoas, ementor.Alunos WHERE Alunos.CPF = Pessoas.CPF AND Alunos.CPF='"+ CPF + "';";
@@ -311,6 +312,7 @@ public class ConexaoMysql {
     public Professor buscaProfessor(String CPF){
         Professor resultado =  new Professor();
         Connection conexao = realizaConexaoMySQL();
+        resultado = null;
         
         String sql = "SELECT * FROM ementor.Pessoas, ementor.Professores WHERE Professores.CPF = Pessoas.CPF AND Professores.CPF='"+ CPF + "';";
         

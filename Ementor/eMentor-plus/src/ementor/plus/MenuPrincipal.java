@@ -76,6 +76,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
 
         jButton6.setText("Editar Professor");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Menu principal");
 
@@ -153,6 +158,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         
         listar.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        AlterarProfessores altera = new AlterarProfessores();
+        
+        altera.setVisible(true);
+        
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments

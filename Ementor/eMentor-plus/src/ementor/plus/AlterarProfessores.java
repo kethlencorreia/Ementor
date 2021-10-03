@@ -44,6 +44,7 @@ public class AlterarProfessores extends javax.swing.JFrame {
         editarCampos = new javax.swing.JButton();
         campoAdmissao = new javax.swing.JFormattedTextField();
         campoTelefone = new javax.swing.JFormattedTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,10 +63,17 @@ public class AlterarProfessores extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        campoCPF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoCPFActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Insira o CPF:");
 
         jLabel7.setText("Nome:");
+
+        campoNome.setEnabled(false);
 
         jLabel8.setText("Data de Nascimento:");
 
@@ -74,14 +82,18 @@ public class AlterarProfessores extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        campoNasc.setEnabled(false);
 
         jLabel9.setText("Telefone:");
 
         jLabel2.setText("Salário:");
 
+        campoSalario.setEnabled(false);
+
         jLabel3.setText("Data de emissão:");
 
         editarCampos.setText("Salvar edições");
+        editarCampos.setEnabled(false);
         editarCampos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editarCamposActionPerformed(evt);
@@ -93,15 +105,24 @@ public class AlterarProfessores extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        campoAdmissao.setEnabled(false);
 
         try {
             campoTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        campoTelefone.setEnabled(false);
         campoTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoTelefoneActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Voltar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -143,15 +164,22 @@ public class AlterarProfessores extends javax.swing.JFrame {
                         .addComponent(editarCampos)))
                 .addGap(40, 40, 40))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(103, 103, 103))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -184,6 +212,7 @@ public class AlterarProfessores extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void pesquisarCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarCPFActionPerformed
@@ -191,13 +220,23 @@ public class AlterarProfessores extends javax.swing.JFrame {
         ConexaoMysql conexao = new ConexaoMysql();
         String id = campoCPF.getText();
         Professor professor = conexao.buscaProfessor(id);
+        
+        if(professor != null){
+            campoNome.setEnabled(true);
+            campoNasc.setEnabled(true);
+            campoTelefone.setEnabled(true);
+            campoSalario.setEnabled(true);
+            campoAdmissao.setEnabled(true);
+            editarCampos.setEnabled(true);
 
-        campoNome.setText(professor.nome);
-        campoNasc.setText(professor.dataNascimento);
-        campoTelefone.setText(professor.telefone);
-        campoSalario.setText( String.valueOf(professor.salarioBruto));
-        campoAdmissao.setText(professor.dataAdmissao);
-
+            campoNome.setText(professor.nome);
+            campoNasc.setText(professor.dataNascimento);
+            campoTelefone.setText(professor.telefone);
+            campoSalario.setText( String.valueOf(professor.salarioBruto));
+            campoAdmissao.setText(professor.dataAdmissao);
+        }else
+            JOptionPane.showMessageDialog(null, "Professor não encontrado!","Erro", 0);
+        
     }//GEN-LAST:event_pesquisarCPFActionPerformed
 
     private void editarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarCamposActionPerformed
@@ -218,11 +257,22 @@ public class AlterarProfessores extends javax.swing.JFrame {
         conexao.editarProfessor(nome, id, data_ad, telefone, data, salario);
         JOptionPane.showMessageDialog(null, "Dados alterados com sucesso");
 
+        setVisible(false);
+        dispose();
     }//GEN-LAST:event_editarCamposActionPerformed
 
     private void campoTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTelefoneActionPerformed
 
     }//GEN-LAST:event_campoTelefoneActionPerformed
+
+    private void campoCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCPFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoCPFActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,6 +317,7 @@ public class AlterarProfessores extends javax.swing.JFrame {
     private javax.swing.JTextField campoSalario;
     private javax.swing.JFormattedTextField campoTelefone;
     private javax.swing.JButton editarCampos;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
