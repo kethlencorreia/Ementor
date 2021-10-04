@@ -238,5 +238,148 @@ public class ConexaoMysql {
 
         return professores;
     }
+    
+    public Aluno buscaAluno(String CPF){
+        Aluno resultado =  new Aluno();
+        resultado = null;
+        Connection conexao = realizaConexaoMySQL();
+        
+        String sql = "SELECT * FROM ementor.Pessoas, ementor.Alunos WHERE Alunos.CPF = Pessoas.CPF AND Alunos.CPF='"+ CPF + "';";
+        
+        try{
+            PreparedStatement preparador = conexao.prepareStatement(sql);
+
+            ResultSet res = preparador.executeQuery();
+
+            while (res.next()){
+                Aluno aluno = new Aluno();
+                aluno.setDados(
+                        res.getString("matricula"),
+                        res.getInt("periodo"),
+                        res.getString("nome"),
+                        res.getString("dataNascimento"),
+                        res.getString("CPF"),
+                        res.getString("telefone"));                                                                  
+                resultado = aluno;
+            }
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null,"Algum imprevisto ocorreu: "+e,"erro",0);
+        }
+        
+        return resultado;
+        
+    }
+    
+    public boolean editarAluno(String nome, String CPF, String dataNascimento, String telefone,
+                                String matricula, int periodo){
+        
+        Connection conexao = realizaConexaoMySQL();
+        
+        String sqlPessoa = "UPDATE ementor.Pessoas SET nome = ?, dataNascimento = ?, telefone = ? WHERE CPF=?";
+        String sqlAluno =  "UPDATE ementor.Alunos SET matricula = ?, periodo = ? WHERE CPF=?";
+
+        try{
+            PreparedStatement preparadorPessoa = conexao.prepareStatement(sqlPessoa);
+            PreparedStatement preparadorAluno = conexao.prepareStatement(sqlAluno);
+            
+            preparadorPessoa.setString(1, nome);
+            preparadorPessoa.setString(2, dataNascimento);
+            preparadorPessoa.setString(3, telefone);
+            preparadorPessoa.setString(4, CPF);
+            
+            preparadorAluno.setString(1,matricula);
+            preparadorAluno.setInt(2, periodo);
+            preparadorAluno.setString(3, CPF);
+            
+            preparadorPessoa.execute();
+            preparadorAluno.execute();
+            
+            
+            return true;
+            
+        }catch(java.sql.SQLIntegrityConstraintViolationException e){
+            
+            }catch(SQLException e){
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Algum imprevisto ocorreu: " + e, "erro", 0);
+        }
+        
+        desconectaMySQL(conexao);
+        
+        return false;
+        
+    }
+    public Professor buscaProfessor(String CPF){
+        Professor resultado =  new Professor();
+        Connection conexao = realizaConexaoMySQL();
+        resultado = null;
+        
+        String sql = "SELECT * FROM ementor.Pessoas, ementor.Professores WHERE Professores.CPF = Pessoas.CPF AND Professores.CPF='"+ CPF + "';";
+        
+        try{
+            PreparedStatement preparador = conexao.prepareStatement(sql);
+            
+            ResultSet res = preparador.executeQuery();
+            
+            while (res.next()){
+                Professor professor = new Professor();
+                professor.setDados(
+                        res.getString("dataAdmissao"),
+                        res.getDouble("salario"),
+                        res.getString("nome"), 
+                        res.getString("dataNascimento"), 
+                        res.getString("CPF"), 
+                        res.getString("telefone"));                                                                  
+                resultado = professor;
+            }
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null,"Algum imprevisto ocorreu: "+e,"erro",0);
+        }
+        
+        
+        return resultado;
+        
+    }
+    
+    public boolean editarProfessor(String nome, String CPF, String dataNascimento, String telefone,
+                                String dataAdmissao, double salario){
+        
+        Connection conexao = realizaConexaoMySQL();
+        
+        String sqlPessoa = "UPDATE ementor.Pessoas SET nome = ?, dataNascimento = ?, telefone = ? WHERE CPF=?";
+        String sqlProfessor =  "UPDATE ementor.Professores SET dataAdmissao = ?, salario = ? WHERE CPF=?";
+
+        try{
+            PreparedStatement preparadorPessoa = conexao.prepareStatement(sqlPessoa);
+            PreparedStatement preparadorProfessor = conexao.prepareStatement(sqlProfessor);
+            
+            preparadorPessoa.setString(1, nome);
+            preparadorPessoa.setString(2, dataNascimento);
+            preparadorPessoa.setString(3, telefone);
+            preparadorPessoa.setString(4, CPF);
+            
+            preparadorProfessor.setString(1,dataAdmissao);
+            preparadorProfessor.setDouble(2, salario);
+            preparadorProfessor.setString(3, CPF);
+            
+            preparadorPessoa.execute();
+            preparadorProfessor.execute();
+            
+            
+            return true;
+            
+        }catch(java.sql.SQLIntegrityConstraintViolationException e){
+            
+            }catch(SQLException e){
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Algum imprevisto ocorreu: " + e, "erro", 0);
+        }
+        
+        desconectaMySQL(conexao);
+        
+        return false;
+        
+    }
+    
 }
 
